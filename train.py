@@ -14,7 +14,7 @@ LOAD_MODEL = True  # Load a saved model?
 PATH = './dqn'  # Path to save model.
 BUFFER_SIZE = 5E4  # Num. moves to keep in buffer.
 H_SIZE = 64  # Num. filters on final convolution layer.
-NUM_GAMES = int(1E4)
+NUM_GAMES = int(1E5)
 SAVE_GAMES = int(1E3)
 
 
