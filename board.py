@@ -245,7 +245,7 @@ class Board(object):
         """Display board state in a human-readable format."""
         row_num = 1
         for row in self.board_state:
-            vals = tuple(self._xstr([cell.value for cell in row]))
+            vals = tuple(self._xstr([cell for cell in row]))
             print(row_num, self.print_row % vals)
             row_num += 1
         print('  A B C D E F G H')
@@ -253,11 +253,14 @@ class Board(object):
 
     def _xstr(self, s):
         """For printing human-readable board: convert None to ' '."""
-        if s is None:
-            return u'\u25E6'  # bullet
-        elif s == 0:
+        if s.value is None:
+            if s.is_valid_move:
+                return '+'
+            else:
+                return u'\u25E6'  # bullet
+        elif s.value == 0:
             return u'\u25CF'  # filled circle
-        elif s == 1:
+        elif s.value == 1:
             return u'\u25CB'  # empty circle
         else:
             raise ValueError('Invalid value for square.')

@@ -166,13 +166,13 @@ if __name__ == '__main__':
 
         while b.game_over is False:
 
-            for row in b.board_state:
-                vals = tuple([cell.is_valid_move for cell in row])
-                print(b.print_row % vals)
+            # for row in b.board_state:
+            #     vals = tuple(['T' if cell.is_valid_move else u'\u25E6' for cell in row])
+            #     print(' ', b.print_row % vals)
 
             next_disk = input("your turn?")
 
-            b.human_move(next_disk)
+            b.human_move(next_disk.capitalize())
 
             valid_moves = np.where(
                 [[x.is_valid_move for x in row] for row in b.board_state])
