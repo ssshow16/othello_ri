@@ -163,6 +163,7 @@ if __name__ == '__main__':
         update_target(target_ops, sess)
         b = Board(verbose=False)
         b.print_board()
+        main_QN.current_player = 1 - b.current_player
 
         while b.game_over is False:
 
@@ -170,7 +171,8 @@ if __name__ == '__main__':
             #     vals = tuple(['T' if cell.is_valid_move else u'\u25E6' for cell in row])
             #     print(' ', b.print_row % vals)
 
-            next_disk = input("your turn?")
+            player = u'\u25CF' if b._current_player == 0 else u'\u25CB'
+            next_disk = input(f"{player} turn: ")
 
             b.human_move(next_disk.capitalize())
 
@@ -183,14 +185,17 @@ if __name__ == '__main__':
 
             s = b.board_state_list()
 
-            main_QN.current_player = b.current_player
-            a = sess.run(
-            main_QN.predict,
-                feed_dict={
-                    main_QN.scalar_input: s,
-                    main_QN.move_mask: move_mask
-                })
-            b.coord_move(move_index_to_coord(a))
+            if main_QN.current_player == b.current_player:
+                # main_QN.current_player = b.current_player
+                a = sess.run(
+                main_QN.predict,
+                    feed_dict={
+                        main_QN.scalar_input: s,
+                        main_QN.move_mask: move_mask
+                    })
+                player = u'\u25CF' if b._current_player == 0 else u'\u25CB'
+                print(f"QN{player}'s move: {a}")
+                b.coord_move(move_index_to_coord(a))
             b.print_board()
 
         print([b.p0_score, b.p1_score])

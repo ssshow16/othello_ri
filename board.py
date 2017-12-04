@@ -250,7 +250,6 @@ class Board(object):
             row_num += 1
         print('  A B C D E F G H')
 
-
     def _xstr(self, s):
         """For printing human-readable board: convert None to ' '."""
         if s.value is None:
